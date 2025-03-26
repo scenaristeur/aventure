@@ -21,7 +21,8 @@ const actions = {
     let doc = {
       '@context': 'https://www.w3.org/ns/activitystreams',
       type: 'Note',
-      content: 'Hello World',
+      title: 'Title',
+      header: 'header',
       blocks: [
         {
           id: uuidv4(),
@@ -46,9 +47,13 @@ const actions = {
   },
   async updateBlock(context, block) {
     let doc = context.state.doc
-    let index = doc.blocks.findIndex((b) => b.id == block.id)
-    doc.blocks[index] = block
-    console.log('block', block)
+    if (block.id == 'titre') {
+      doc.title = block.content
+    } else {
+      let index = doc.blocks.findIndex((b) => b.id == block.id)
+      doc.blocks[index] = block
+      // console.log('block', block)
+    }
     context.commit('setDoc', doc)
   },
 }

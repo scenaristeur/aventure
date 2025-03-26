@@ -1,11 +1,30 @@
 <template>
   <div v-if="doc != null">
-    <div v-for="block of doc.blocks" v-bind:key="block.id">
-      menu:
-      <div :id="block.id" contenteditable="true" @blur="blur" @input="input">
-        {{ block.content || block.default }}
-      </div>
+    <h1 id="titre" contenteditable="true" @blur="blur">{{ doc.title }}</h1>
+    <div class="flex m-10">
+      <draggable class="dragArea list-group w-full" :list="doc.blocks" @change="log">
+        <div
+          class="list-group-item bg-gray-300 m-1 p-3 rounded-md"
+          v-for="block in doc.blocks"
+          :key="block.id"
+        >
+          <div
+            :id="block.id"
+            contenteditable="true"
+            @blur="blur"
+            @input="input"
+            style="display: inline-block"
+          >
+            <!-- <img v-if="block.type == 'img'" :src="block.content || block.default" />
+            <div v-else> -->
+            {{ block.content || block.default }}
+            <!-- </div> -->
+          </div>
+        </div>
+      </draggable>
     </div>
+
+    <hr />
     <button
       type="button"
       class="btn btn-primary"
@@ -27,9 +46,28 @@
 </template>
 
 <script>
+import { VueDraggableNext } from "vue-draggable-next";
 export default {
   name: "DocumentEdit",
+  components: {
+    draggable: VueDraggableNext,
+  },
+  data() {
+    return {
+      enabled: true,
+      list: [
+        { name: "John", id: 1 },
+        { name: "Joao", id: 2 },
+        { name: "Jean", id: 3 },
+        { name: "Gerard", id: 4 },
+      ],
+      dragging: false,
+    };
+  },
   methods: {
+    log(event) {
+      console.log(event);
+    },
     blur(e) {
       console.log(e.target.id, e.target);
       let block = {
