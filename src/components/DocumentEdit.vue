@@ -4,11 +4,9 @@
     <small id="header" contenteditable="true" @blur="blur">{{ doc.header }}</small>
     <div class="flex m-10">
       <draggable class="dragArea list-group w-full" :list="doc.blocks" @change="log">
-        <div
-          class="list-group-item bg-gray-300 m-1 p-3 rounded-md"
-          v-for="block in doc.blocks"
-          :key="block.id"
-        >
+        <div v-for="block in doc.blocks" :key="block.id">
+          <button type="button" class="btn btn-sm">☰</button>
+
           <div
             :id="block.id"
             contenteditable="true"
@@ -16,6 +14,7 @@
             @input="input"
             autofocus
             style="display: inline-block"
+            class="list-group-item bg-gray-300 m-1 p-3 rounded-md"
           >
             <!-- <img v-if="block.type == 'img'" :src="block.content || block.default" />
             <div v-else> -->
