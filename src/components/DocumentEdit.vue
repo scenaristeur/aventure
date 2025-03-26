@@ -1,6 +1,7 @@
 <template>
   <div v-if="doc != null">
     <h1 id="titre" contenteditable="true" @blur="blur">{{ doc.title }}</h1>
+    <small id="header" contenteditable="true" @blur="blur">{{ doc.header }}</small>
     <div class="flex m-10">
       <draggable class="dragArea list-group w-full" :list="doc.blocks" @change="log">
         <div
@@ -13,6 +14,7 @@
             contenteditable="true"
             @blur="blur"
             @input="input"
+            autofocus
             style="display: inline-block"
           >
             <!-- <img v-if="block.type == 'img'" :src="block.content || block.default" />

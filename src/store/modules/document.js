@@ -5,12 +5,15 @@ import { v4 as uuidv4 } from 'uuid'
 
 const state = () => ({
   doc: null,
+  docs: JSON.parse(localStorage.getItem('aventure-docs')) || {},
 })
 
 const mutations = {
   setDoc(state, d) {
     console.log('doc', d)
     state.doc = d
+    state.docs[d.id] = d
+    localStorage.setItem('aventure-docs', JSON.stringify(state.docs))
   },
 }
 
@@ -20,6 +23,7 @@ const actions = {
   async newDoc(context) {
     let doc = {
       '@context': 'https://www.w3.org/ns/activitystreams',
+      id: uuidv4(),
       type: 'Note',
       title: 'Title',
       header: 'header',
@@ -49,6 +53,8 @@ const actions = {
     let doc = context.state.doc
     if (block.id == 'titre') {
       doc.title = block.content
+    } else if (block.id == 'header') {
+      doc.header = block.content
     } else {
       let index = doc.blocks.findIndex((b) => b.id == block.id)
       doc.blocks[index] = block
