@@ -70,7 +70,13 @@
     >
       Media
     </button>
-
+    <hr />
+    Choix :
+    <div v-for="choice in doc.choices" :key="choice.id">
+      {{ choice }}
+    </div>
+    <button type="button" class="btn btn-primary" @click="addChoiceNew()">+ new</button>
+    <button type="button" class="btn btn-primary" @click="addChoiceLink()">+ link</button>
     <hr />
     <button type="button" class="btn btn-light btn-sm" @click="debug = !debug">
       debug
@@ -119,6 +125,18 @@ export default {
     // },
     addBlock(params) {
       this.$store.dispatch("document/newBlock", params);
+    },
+    addChoice(params) {
+      this.$store.commit("document/newChoice", params);
+    },
+    async addChoiceNew() {
+      let current_doc = this.doc;
+      let id_new_doc = await this.$store.dispatch("document/newDoc");
+      console.log("id_new_doc", id_new_doc);
+      this.addChoice({ doc_id: current_doc.id, choice_id: id_new_doc });
+    },
+    addChoiceLink() {
+      this.$store.dispatch("document/newChoice", { type: "link" });
     },
   },
   watch: {

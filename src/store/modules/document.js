@@ -16,6 +16,11 @@ const mutations = {
     state.docs[d.id] = d
     localStorage.setItem('aventure-docs', JSON.stringify(state.docs))
   },
+  newChoice(state, params) {
+    let doc = state.docs[params.doc_id]
+    if (!doc.choices) doc.choices = []
+    doc.choices.push(params.choice_id)
+  },
 }
 
 const actions = {
@@ -42,6 +47,7 @@ const actions = {
       ],
     }
     context.commit('setDoc', doc)
+    return doc.id
   },
   async newBlock(context, params) {
     let doc = context.state.doc
@@ -50,6 +56,7 @@ const actions = {
     doc.blocks.push(block)
     context.commit('setDoc', doc)
   },
+
   async updateBlock(context, block) {
     let doc = context.state.doc
     if (block.id == 'titre') {
