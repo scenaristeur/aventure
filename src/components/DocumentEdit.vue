@@ -4,45 +4,78 @@
     <small id="header" contenteditable="true" @blur="blur">{{ doc.header }}</small>
     <div class="flex m-10">
       <draggable class="dragArea list-group w-full" :list="doc.blocks" @change="log">
-        <div v-for="block in doc.blocks" :key="block.id">
-          <button type="button" class="btn btn-sm">☰</button>
+        <transition-group>
+          <div v-for="block in doc.blocks" :key="block.id">
+            <button type="button" class="btn btn-sm">☰</button>
 
-          <div
-            :id="block.id"
-            contenteditable="true"
-            @blur="blur"
-            @input="input"
-            autofocus
-            style="display: inline-block"
-            class="list-group-item bg-gray-300 m-1 p-3 rounded-md"
-          >
-            <!-- <img v-if="block.type == 'img'" :src="block.content || block.default" />
+            <div
+              :id="block.id"
+              contenteditable="true"
+              @blur="blur"
+              @input="input"
+              autofocus
+              style="display: inline-block"
+              class="list-group-item bg-gray-300 m-1 p-3 rounded-md"
+            >
+              <!-- <img v-if="block.type == 'img'" :src="block.content || block.default" />
             <div v-else> -->
-            {{ block.content || block.default }}
-            <!-- </div> -->
+              {{ block.content || block.default }}
+              <!-- </div> -->
+            </div>
           </div>
-        </div>
+        </transition-group>
       </draggable>
     </div>
 
     <hr />
     <button
       type="button"
-      class="btn btn-primary"
-      @click="addBlock({ type: 'paragraph', default: 'Hello World' })"
+      class="btn btn-light btn-sm"
+      @click="addBlock({ type: 'paragraph', default: '' })"
     >
       Text
     </button>
     <button
       type="button"
-      class="btn btn-primary"
+      class="btn btn-light btn-sm"
       @click="addBlock({ type: 'img', default: 'https://picsum.photos/200/300' })"
     >
       Image
     </button>
+    <button
+      type="button"
+      class="btn btn-light btn-sm"
+      @click="addBlock({ type: 'link', default: 'Hello World' })"
+    >
+      Link
+    </button>
+    <button
+      type="button"
+      class="btn btn-light btn-sm"
+      @click="addBlock({ type: 'code', default: 'Hello World' })"
+    >
+      Code
+    </button>
+    <button
+      type="button"
+      class="btn btn-light btn-sm"
+      @click="addBlock({ type: 'table', default: 'Hello World' })"
+    >
+      Table
+    </button>
+    <button
+      type="button"
+      class="btn btn-light btn-sm"
+      @click="addBlock({ type: 'media', default: 'Hello World' })"
+    >
+      Media
+    </button>
 
     <hr />
-    the doc {{ doc }}
+    <button type="button" class="btn btn-light btn-sm" @click="debug = !debug">
+      debug
+    </button>
+    <div v-if="debug">{{ doc }}</div>
   </div>
 </template>
 
@@ -56,18 +89,14 @@ export default {
   data() {
     return {
       enabled: true,
-      list: [
-        { name: "John", id: 1 },
-        { name: "Joao", id: 2 },
-        { name: "Jean", id: 3 },
-        { name: "Gerard", id: 4 },
-      ],
       dragging: false,
+      debug: false,
     };
   },
   methods: {
     log(event) {
       console.log(event);
+      this.$store.dispatch("document/reorderBlocks", this.doc);
     },
     blur(e) {
       console.log(e.target.id, e.target);

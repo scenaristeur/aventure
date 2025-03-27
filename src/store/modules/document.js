@@ -28,16 +28,16 @@ const actions = {
       title: 'Title',
       header: 'header',
       blocks: [
-        {
-          id: uuidv4(),
-          type: 'paragraph',
-          default: 'Hello World',
-        },
-        {
-          id: uuidv4(),
-          type: 'paragraph',
-          default: 'Hello World2',
-        },
+        // {
+        //   id: uuidv4(),
+        //   type: 'paragraph',
+        //   default: 'Hello World',
+        // },
+        // {
+        //   id: uuidv4(),
+        //   type: 'paragraph',
+        //   default: 'Hello World2',
+        // },
       ],
     }
     context.commit('setDoc', doc)
@@ -60,6 +60,9 @@ const actions = {
       doc.blocks[index] = block
       // console.log('block', block)
     }
+    context.commit('setDoc', doc)
+  },
+  async reorderBlocks(context, doc) {
     context.commit('setDoc', doc)
   },
 }
