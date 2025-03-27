@@ -109,7 +109,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Edition {{ type }}</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Choix vers un doc</h1>
             <button
               type="button"
               class="btn-close"
@@ -120,12 +120,17 @@
           <div class="modal-body">
             <div class="list-group">
               <button
-                v-for="doc in docs"
-                :key="doc.id"
+                v-for="doclink in docs"
+                :key="doclink.id"
                 type="button"
-                class="list-group-item list-group-item-action"
+                :class="{
+                  'list-group-item list-group-item-action': true,
+                  active: doc.choices.includes(doclink.id),
+                }"
+                @click="toggleChoice(doclink.id)"
+                :disabled="doc.id == doclink.id"
               >
-                {{ doc.title }}
+                {{ doclink.title }} / {{ doc.choices.includes(doclink.id) }}
               </button>
             </div>
           </div>
@@ -193,8 +198,12 @@ export default {
       console.log("id_new_doc", id_new_doc);
       this.addChoice({ doc_id: current_doc.id, choice_id: id_new_doc });
     },
-    addChoiceLink() {
-      this.$store.dispatch("document/newChoice", { type: "link" });
+    toggleChoice(id_new_doc) {
+      this.doc.choices.includes(id_new_doc)
+        ? this.doc.choices.splice(this.doc.choices.indexOf(id_new_doc), 1)
+        : this.doc.choices.push(id_new_doc);
+      // this.$store.dispatch("document/newChoice", { type: "link" });
+      // this.addChoice({ doc_id: this.doc.id, choice_id: id_new_doc });
     },
   },
   watch: {

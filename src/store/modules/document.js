@@ -18,7 +18,6 @@ const mutations = {
   },
   newChoice(state, params) {
     let doc = state.docs[params.doc_id]
-    if (!doc.choices) doc.choices = []
     doc.choices.push(params.choice_id)
   },
 }
@@ -33,18 +32,8 @@ const actions = {
       type: 'Note',
       title: 'Title',
       header: 'header',
-      blocks: [
-        // {
-        //   id: uuidv4(),
-        //   type: 'paragraph',
-        //   default: 'Hello World',
-        // },
-        // {
-        //   id: uuidv4(),
-        //   type: 'paragraph',
-        //   default: 'Hello World2',
-        // },
-      ],
+      blocks: [],
+      choices: [],
     }
     context.commit('setDoc', doc)
     return doc.id
