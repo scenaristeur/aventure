@@ -72,16 +72,74 @@
     </button>
     <hr />
     Choix :
-    <div v-for="choice in doc.choices" :key="choice.id">
-      {{ choice }}
-    </div>
+    <button
+      type="button"
+      class="btn btn-info"
+      v-for="choice in doc.choices"
+      :key="choice.id"
+    >
+      {{ docs[choice].title }}
+    </button>
     <button type="button" class="btn btn-primary" @click="addChoiceNew()">+ new</button>
-    <button type="button" class="btn btn-primary" @click="addChoiceLink()">+ link</button>
+    <!-- <button type="button" class="btn btn-primary" @click="addChoiceLink()">+ link</button> -->
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#choiceModal"
+    >
+      + link
+    </button>
+
     <hr />
     <button type="button" class="btn btn-light btn-sm" @click="debug = !debug">
       debug
     </button>
     <div v-if="debug">{{ doc }}</div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="choiceModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Edition {{ type }}</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="list-group">
+              <button
+                v-for="doc in docs"
+                :key="doc.id"
+                type="button"
+                class="list-group-item list-group-item-action"
+              >
+                {{ doc.title }}
+              </button>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Fermer
+            </button>
+            <!-- <button type="button" class="btn btn-primary" v-on:click="save">
+              Enregistrer
+            </button> -->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -147,6 +205,9 @@ export default {
   computed: {
     doc() {
       return this.$store.state.document.doc;
+    },
+    docs() {
+      return this.$store.state.document.docs;
     },
   },
 };
