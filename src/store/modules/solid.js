@@ -38,7 +38,8 @@ const actions = {
         if (info.isLoggedIn == true) {
           console.log(`Logged in with WebID [${info.webId}]`)
           context.commit('setSession', info)
-          // let session = sc.getDefaultSession()
+          let session = sc.getDefaultSession()
+          context.dispatch('solid_data/getPod', info, { root: true })
 
           // This line is not reached until you are successfully logged in
           localStorage.setItem(LOCAL_STORAGE_KEY__SOLID_SESSION_RESTORE_URL, '')

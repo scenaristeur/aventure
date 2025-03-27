@@ -33,3 +33,6 @@ npm run build
 ```sh
 npm run lint
 ```
+
+- POST http://localhost:3000/auth/login
+- GET http://localhost:3000/david

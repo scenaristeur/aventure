@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import document from './modules/document'
 import solid from './modules/solid'
-// import solid_data from './modules/solid_data'
+import solid_data from './modules/solid_data'
 
 export default createStore({
   state: {},
@@ -12,6 +12,6 @@ export default createStore({
     document,
     // config,
     solid,
-    // solid_data,
+    solid_data,
   },
 })

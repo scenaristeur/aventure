@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 const state = () => ({
   doc: null,
   docs: JSON.parse(localStorage.getItem('aventure-docs')) || {},
+  workspace: 'test',
 })
 
 const mutations = {
@@ -64,6 +65,11 @@ const actions = {
   },
   async reorderBlocks(context, doc) {
     context.commit('setDoc', doc)
+  },
+  async save(context, params) {
+    params.docs = context.state.docs
+    params.workspace = context.state.workspace
+    context.dispatch(params.type + '_data/saveDoc', params, { root: true })
   },
 }
 

@@ -4,10 +4,11 @@ import HelloWorld from "./components/HelloWorld.vue";
 import SolidLogin from "./components/SolidLogin.vue";
 import DocumentEdit from "./components/DocumentEdit.vue";
 import DocumentMenu from "./components/DocumentMenu.vue";
+import PodSave from "./components/PodSave.vue";
 </script>
 
 <template>
-  <header>
+  <!-- <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
@@ -18,12 +19,13 @@ import DocumentMenu from "./components/DocumentMenu.vue";
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
-  </header>
+  </header> -->
   <SolidLogin />
+  <PodSave />
   <DocumentMenu />
   <DocumentEdit />
 
-  <RouterView />
+  <!-- <RouterView /> -->
 </template>
 
 <style scoped>
